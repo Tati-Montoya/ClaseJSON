@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import domain.Amount;
 import json.AmountTypeAdapter;
 import json.LocalDateTypeAdapter;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class BankStatementJsonParser implements BankStatementParser {
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-            .registerTypeAdapter(Double.class, new AmountTypeAdapter())
+            .registerTypeAdapter(Amount.class, new AmountTypeAdapter())
             .create();
 
     @Override

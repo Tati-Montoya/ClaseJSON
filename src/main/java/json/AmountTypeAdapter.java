@@ -1,22 +1,20 @@
 package json;
 
 import com.google.gson.*;
+import domain.Amount;
 import java.lang.reflect.Type;
-import java.util.Currency;
-import java.util.Set;
 
-public class AmountTypeAdapter implements JsonSerializer<Currency>, JsonDeserializer<Set<Currency>> {
-    private final Set<Currency> AMOUNT = Currency.getAvailableCurrencies();
+public class AmountTypeAdapter implements JsonSerializer<Amount>, JsonDeserializer<Amount> {
 
     @Override
-    public JsonElement serialize(Currency src, Type typeOfSrc, JsonSerializationContext context) {
-        String amountAsDouble = AMOUNT.toString();
+    public JsonElement serialize(Amount src, Type typeOfSrc, JsonSerializationContext context) {
+        double amountAsDouble = src.getValue();
         return new JsonPrimitive(amountAsDouble);
     }
 
     @Override
-    public Set<Currency> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Amount deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         double asDouble = json.getAsDouble();
-        return Currency.getAvailableCurrencies();
+        return new Amount(asDouble);
     }
 }

@@ -59,9 +59,9 @@ public class BankStatementAnalyzer {
     public static SummaryStatistics collectSummary(BankStatementProcessor bankStatementProcessor) {
         return new SummaryStatistics(
                 bankStatementProcessor.calculateTotal(),
-                0,
-                0,
-                0
+                bankStatementProcessor.calculateMin(),
+                bankStatementProcessor.calculateMax(),
+                bankStatementProcessor.calculateAverage()
         );
     }
 }

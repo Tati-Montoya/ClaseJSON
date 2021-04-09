@@ -13,6 +13,30 @@ public class BankStatementProcessor {
         return summarizeTransactions((accumulator, transaction) -> accumulator + transaction.getAmount().getValue());
     }
 
+    public double calculateAverage() {
+        return calculateTotal()/ bankTransactions.size();
+    }
+
+    public double calculateMin() {
+        double min = 0;
+        for (BankTransaction transaction: bankTransactions) {
+            if (transaction.getAmount().getValue() < min){
+                min = transaction.getAmount().getValue();
+            }
+        }
+        return min;
+    }
+
+    public double calculateMax() {
+        double max = 0;
+        for (BankTransaction transaction: bankTransactions) {
+            if (transaction.getAmount().getValue() > max){
+                max = transaction.getAmount().getValue();
+            }
+        }
+        return max;
+    }
+
     public double calculateTotalForMonth(Month month) {
         return summarizeTransactions((accumulator, transaction) -> {
             if (transaction.getDate().getMonth() == month) {
