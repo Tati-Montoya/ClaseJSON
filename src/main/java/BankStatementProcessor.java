@@ -1,6 +1,11 @@
+import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BankStatementProcessor {
     private final List<BankTransaction> bankTransactions;
@@ -74,4 +79,49 @@ public class BankStatementProcessor {
         }
         return result;
     }
+   // Metodo que filtra en rango de fechas
+    public List<BankTransaction> filterByDate (String fechaInicial, String fechaFinal){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        LocalDate fechaIni = LocalDate.parse(fechaInicial, formatter);
+        LocalDate fechaFin = LocalDate.parse(fechaFinal, formatter);
+
+        long numOfDaysBetween = ChronoUnit.DAYS.between(fechaIni, fechaFin.plusDays(1));
+        List<BankTransaction> transactionFiltradas = new ArrayList<BankTransaction>();
+        List rangeDates = IntStream.iterate(0, i -> i + 1)
+                .limit(numOfDaysBetween)
+                .mapToObj(i -> fechaIni.plusDays(i))
+                .collect(Collectors.toList());
+        for(int i = 0; i < this.bankTransactions.size(); i++) {
+            boolean found = rangeDates.contains(this.bankTransactions.get(i).getDate());
+            if(found) {
+                transactionFiltradas.add(this.bankTransactions.get(i));
+            }
+        }
+        return transactionFiltradas;
+    }
+
+    public double calculateMaxForDate() {
+        List<BankTransaction> filterAmount = filterByDate( "2017-02-02", "2017-10-02");
+        double max = 0;
+        for (BankTransaction transaction: filterAmount) {
+            if (transaction.getAmount().getValue() > max){
+                max = transaction.getAmount().getValue();
+            }
+        }
+        System.out.println(max);
+        return max;
+    }
+
+    public double calculateMinForDate() {
+        List<BankTransaction> filterAmount = filterByDate( "2017-02-02", "2017-10-02");
+        double min = 0;
+        for (BankTransaction transaction: filterAmount) {
+            if (transaction.getAmount().getValue() < min){
+                min = transaction.getAmount().getValue();
+            }
+        }
+        System.out.println(min);
+        return min;
+    }
+
 }

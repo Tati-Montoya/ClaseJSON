@@ -1,10 +1,12 @@
+import java.util.List;
+
 public class SummaryStatistics {
     private final double sum;
     private final double min;
     private final double max;
     private final double average;
 
-    public SummaryStatistics(double sum, double min, double max, double average) {
+    public SummaryStatistics(double sum, double min, double max, double average, List<BankTransaction> bankTransactions, double calculateMaxForDate, double v) {
         this.sum = sum;
         this.min = min;
         this.max = max;

@@ -61,7 +61,11 @@ public class BankStatementAnalyzer {
                 bankStatementProcessor.calculateTotal(),
                 bankStatementProcessor.calculateMin(),
                 bankStatementProcessor.calculateMax(),
-                bankStatementProcessor.calculateAverage()
+                bankStatementProcessor.calculateAverage(),
+                bankStatementProcessor.filterByDate("2017-02-02", "2017-10-02"),
+                bankStatementProcessor.calculateMaxForDate(),
+                bankStatementProcessor.calculateMinForDate()
+
         );
     }
 }
